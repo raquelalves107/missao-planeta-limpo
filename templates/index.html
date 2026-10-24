@@ -3,8 +3,9 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Missão Planeta Limpo </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Missão Planeta Limpo</title>
 
   <style>
     * {
@@ -13,39 +14,45 @@
 
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #d9f7e1, #d9efff);
-      color: #173b2c;
+      background: linear-gradient(120deg, #dcf8e6, #d9f0ff);
+      color: #123b32;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
     }
 
     main {
-      width: min(1100px, 96%);
-      margin: 12px auto;
-      padding: 18px;
+      width: 100%;
+      max-width: 1250px;
       background: white;
-      border-radius: 22px;
-      box-shadow: 0 8px 25px #0002;
+      border-radius: 28px;
+      padding: 25px;
+      box-shadow: 0 10px 30px #00000018;
     }
 
     header {
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
     h1 {
-      color: #19834a;
-      font-size: 30px;
-      margin: 3px 0;
+      color: #07834c;
+      font-size: clamp(26px, 3vw, 42px);
+      margin: 0 0 8px;
     }
 
     header p {
-      margin: 5px;
+      margin: 0;
+      font-size: 19px;
     }
 
     .jogo {
       display: grid;
-      grid-template-columns: 45% 55%;
-      gap: 15px;
+      grid-template-columns: 42% 58%;
+      gap: 20px;
       align-items: center;
     }
 
@@ -53,148 +60,146 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      min-width: 0;
     }
 
     #imagem {
       display: block;
       width: auto;
       max-width: 100%;
-      max-height: min(68vh, 470px);
+      max-height: min(75vh, 560px);
       object-fit: contain;
-      border-radius: 14px;
-    }
-
-    .perguntas {
-      padding: 15px;
-      text-align: center;
-      background: #f5fbf7;
       border-radius: 18px;
     }
 
-    #contador {
-      font-size: 23px;
-      margin: 8px 0;
+    .perguntas {
+      background: #f3faf5;
+      border-radius: 22px;
+      padding: 24px;
+      text-align: center;
+      min-width: 0;
     }
 
-    #pontos {
-      font-size: 19px;
-      margin: 8px 0;
+    #contador {
+      font-size: 24px;
+      margin: 0 0 18px;
     }
 
     #frase {
-      font-size: 21px;
+      color: #087d48;
+      font-size: 25px;
       font-weight: bold;
-      color: #20774b;
-      margin: 15px 0;
+      margin: 12px 0;
     }
 
     .pergunta {
-      font-size: 23px;
-      margin: 14px 0;
+      font-size: 27px;
+      line-height: 1.3;
+      margin: 18px 0;
     }
 
     .botoes {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     button {
-      width: 100%;
-      padding: 17px;
       border: none;
-      border-radius: 14px;
-      color: white;
-      font-size: 21px;
+      border-radius: 16px;
+      padding: 19px;
+      font-size: 25px;
       font-weight: bold;
       cursor: pointer;
-    }
-
-    .preserva {
-      background: #198c49;
-    }
-
-    .prejudica {
-      background: #d63232;
-    }
-
-    .proximo {
-      background: #2372c9;
-      margin-top: 12px;
+      width: 100%;
+      touch-action: manipulation;
     }
 
     button:disabled {
-      opacity: .5;
-      cursor: default;
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .preserva {
+      background: #168a4c;
+      color: white;
+    }
+
+    .prejudica {
+      background: #dc3035;
+      color: white;
     }
 
     #resultado {
-      font-size: 19px;
+      margin-top: 18px;
+      font-size: 22px;
       font-weight: bold;
-      margin-top: 12px;
+      min-height: 30px;
     }
 
-    #proximo {
+    .acerto {
+      color: #087d48;
+    }
+
+    .erro {
+      color: #c5262b;
+    }
+
+    .proximo {
       display: none;
+      margin-top: 16px;
+      background: #1976d2;
+      color: white;
     }
 
-    @media (max-width: 650px) {
+    .reiniciar {
+      display: none;
+      margin-top: 16px;
+      background: #087d48;
+      color: white;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        align-items: flex-start;
+      }
+
+      main {
+        padding: 15px;
+      }
+
       .jogo {
         grid-template-columns: 1fr;
       }
 
       #imagem {
-        max-height: 260px;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      .pergunta {
-        font-size: 19px;
-      }
-    }
-
-    @media (max-height: 600px) and (min-width: 651px) {
-      main {
-        margin: 5px auto;
-        padding: 10px;
-      }
-
-      header {
-        margin-bottom: 5px;
-      }
-
-      #imagem {
-        max-height: 65vh;
+        max-height: 35vh;
       }
 
       .perguntas {
-        padding: 9px;
+        padding: 16px;
+      }
+
+      .pergunta {
+        font-size: 21px;
+      }
+
+      #frase {
+        font-size: 20px;
       }
 
       button {
-        padding: 11px;
+        font-size: 20px;
+        padding: 15px;
       }
     }
-  
-@media (min-width: 651px) {
-  .jogo {
-    display: grid !important;
-    grid-template-columns: 45% 55% !important;
-    align-items: center;
-  }
-}
-
-  
   </style>
 </head>
 
 <body>
   <main>
     <header>
-      <h1>🌎 Missão Planeta Limpo - TESTE</h1>
+      <h1>🌎 Missão Planeta Limpo</h1>
       <p>Colégio Tiradentes • Feira de Ciências</p>
     </header>
 
@@ -206,7 +211,6 @@
 
       <section class="perguntas">
         <h2 id="contador">Preparando desafios...</h2>
-        <p id="pontos">⭐ Pontos: 0</p>
 
         <p id="frase"></p>
 
@@ -215,134 +219,189 @@
         </h2>
 
         <div class="botoes">
-          <button class="preserva" onclick="responder('PRESERVA')">
+          <button
+            class="preserva"
+            onclick="responder('PRESERVA')">
             🌱 PRESERVA
           </button>
 
-          <button class="prejudica" onclick="responder('PREJUDICA')">
+          <button
+            class="prejudica"
+            onclick="responder('PREJUDICA')">
             🗑️ PREJUDICA
           </button>
         </div>
 
         <div id="resultado" aria-live="polite"></div>
 
-        <button id="proximo" class="proximo" onclick="proxima()">
-          Próximo desafio ➜
+        <button
+          id="proximo"
+          class="proximo"
+          onclick="proxima()">
+          Próxima imagem ➜
+        </button>
+
+        <button
+          id="reiniciar"
+          class="reiniciar"
+          onclick="iniciarJogo()">
+          🌎 Nova missão!
         </button>
       </section>
+
     </div>
   </main>
 
   <script>
     let desafios = [];
+    let rodada = [];
     let indice = 0;
-    let pontos = 0;
     let respondido = false;
 
-    const botoes = document.querySelectorAll(".botoes button");
+    const TOTAL_RODADAS = 3;
 
-    async function iniciar() {
+    const botoes = document.querySelectorAll(
+      ".preserva, .prejudica"
+    );
+
+    async function iniciarJogo() {
       try {
         const resposta = await fetch("/desafios");
-        if (!resposta.ok) throw new Error("Erro ao carregar");
+
+        if (!resposta.ok) {
+          throw new Error("Não foi possível carregar os desafios.");
+        }
 
         desafios = await resposta.json();
+
+        if (!Array.isArray(desafios) || desafios.length === 0) {
+          throw new Error("Nenhum desafio foi encontrado.");
+        }
+
+        rodada = [...desafios]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, TOTAL_RODADAS);
+
         indice = 0;
-        pontos = 0;
-        mostrar();
+
+        mostrarDesafio();
+
       } catch (erro) {
         document.getElementById("contador").textContent =
-          "Não foi possível carregar o jogo.";
+          "Não foi possível iniciar o jogo.";
+
+        document.getElementById("resultado").textContent =
+          erro.message;
       }
     }
 
-    function mostrar() {
+    function mostrarDesafio() {
       respondido = false;
-      botoes.forEach(b => b.disabled = false);
 
-      document.getElementById("resultado").textContent = "";
-      document.getElementById("proximo").style.display = "none";
+      const desafio = rodada[indice];
 
       document.getElementById("contador").textContent =
-        `Desafio ${indice + 1} de ${desafios.length}`;
+        `Desafio ${indice + 1} de ${rodada.length}`;
 
-      document.getElementById("pontos").textContent =
-        `⭐ Pontos: ${pontos}`;
-
-      const desafio = desafios[indice];
+      document.getElementById("frase").textContent =
+        desafio.frase;
 
       document.getElementById("imagem").src =
-        "/static/imagens/" + encodeURIComponent(desafio.imagem);
+    "/static/imagens/" + desafio.imagem.split("/").pop();
 
-      document.getElementById("frase").textContent = desafio.frase;
+      const resultado = document.getElementById("resultado");
+
+      resultado.textContent = "";
+      resultado.className = "";
+
+      botoes.forEach(botao => {
+        botao.disabled = false;
+      });
+
+      document.getElementById("proximo").style.display = "none";
+      document.getElementById("reiniciar").style.display = "none";
     }
 
     async function responder(escolha) {
       if (respondido) return;
 
       respondido = true;
-      botoes.forEach(b => b.disabled = true);
+
+      botoes.forEach(botao => {
+        botao.disabled = true;
+      });
+
+      const desafio = rodada[indice];
+      const resultado = document.getElementById("resultado");
+
+      resultado.textContent = "🤖 A inteligência artificial está analisando...";
 
       try {
         const resposta = await fetch("/responder", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json"
+          },
           body: JSON.stringify({
-            frase: desafios[indice].frase,
+            frase: desafio.frase,
             escolha: escolha
           })
         });
 
-        if (!resposta.ok) throw new Error("Erro na resposta");
-
-        const dados = await resposta.json();
-        const resultado = document.getElementById("resultado");
-
-        if (dados.acertou) {
-          pontos += 10;
-          resultado.textContent = "🎉 Parabéns! Você acertou!";
-          resultado.style.color = "#198c49";
-        } else {
-          resultado.textContent =
-            "💡 Quase! A resposta correta é " + dados.resposta_correta;
-          resultado.style.color = "#d63232";
+        if (!resposta.ok) {
+          throw new Error("Erro ao consultar a inteligência artificial.");
         }
 
-        document.getElementById("pontos").textContent =
-          `⭐ Pontos: ${pontos}`;
+        const dados = await resposta.json();
 
-        document.getElementById("proximo").style.display = "block";
+        if (dados.acertou) {
+          resultado.textContent =
+            "🎉 Parabéns! Você acertou!";
+
+          resultado.className = "acerto";
+        } else {
+          resultado.textContent =
+            `💡 Quase! Essa atitude ${dados.resposta_correta} o planeta.`;
+
+          resultado.className = "erro";
+        }
+
+        if (indice < rodada.length - 1) {
+          document.getElementById("proximo").style.display =
+            "block";
+        } else {
+          document.getElementById("contador").textContent =
+            "🌟 Missão concluída!";
+
+          document.getElementById("reiniciar").style.display =
+            "block";
+        }
+
       } catch (erro) {
+        resultado.textContent =
+          "Não foi possível verificar. Tente novamente.";
+
+        resultado.className = "erro";
+
         respondido = false;
-        botoes.forEach(b => b.disabled = false);
-        document.getElementById("resultado").textContent =
-          "Erro de conexão. Tente novamente.";
+
+        botoes.forEach(botao => {
+          botao.disabled = false;
+        });
       }
     }
 
     function proxima() {
+      if (!respondido) return;
+
       indice++;
 
-      if (indice >= desafios.length) {
-        document.querySelector("main").innerHTML = `
-          <header>
-            <h1>🌎 Missão concluída!</h1>
-          </header>
-          <section class="perguntas">
-            <h2>⭐ Você fez ${pontos} pontos de 100!</h2>
-            <p>Parabéns por ajudar a cuidar do planeta!</p>
-            <button class="proximo" onclick="location.reload()">
-              Jogar novamente
-            </button>
-          </section>
-        `;
-        return;
+      if (indice < rodada.length) {
+        mostrarDesafio();
       }
-
-      mostrar();
     }
 
-    iniciar();
+    iniciarJogo();
   </script>
 </body>
 </html>
