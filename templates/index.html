@@ -159,6 +159,13 @@
       color: white;
     }
 
+    .instrucao-controle {
+      margin-top: 18px;
+      font-size: 15px;
+      color: #527568;
+      line-height: 1.5;
+    }
+
     @media (max-width: 700px) {
       body {
         align-items: flex-start;
@@ -206,7 +213,10 @@
     <div class="jogo">
 
       <div class="imagem-area">
-        <img id="imagem" alt="Situação ambiental ilustrada">
+        <img
+          id="imagem"
+          alt="Situação ambiental ilustrada"
+        >
       </div>
 
       <section class="perguntas">
@@ -220,14 +230,18 @@
 
         <div class="botoes">
           <button
+            id="btnPreservar"
             class="preserva"
-            onclick="responder('PRESERVA')">
+            onclick="responder('PRESERVA')"
+            disabled>
             🌱 PRESERVA
           </button>
 
           <button
+            id="btnPrejudicar"
             class="prejudica"
-            onclick="responder('PREJUDICA')">
+            onclick="responder('PREJUDICA')"
+            disabled>
             🗑️ PREJUDICA
           </button>
         </div>
@@ -247,6 +261,13 @@
           onclick="iniciarJogo()">
           🌎 Nova missão!
         </button>
+
+        <p class="instrucao-controle">
+          🎮 Controle reciclável:
+          ← PRESERVA | → PREJUDICA
+          <br>
+          Espaço: próxima imagem ou nova missão
+        </p>
       </section>
 
     </div>
@@ -257,6 +278,7 @@
     let rodada = [];
     let indice = 0;
     let respondido = false;
+    let carregando = true;
 
     const TOTAL_RODADAS = 3;
 
@@ -264,18 +286,49 @@
       ".preserva, .prejudica"
     );
 
+    const botaoProximo =
+      document.getElementById("proximo");
+
+    const botaoReiniciar =
+      document.getElementById("reiniciar");
+
+    function bloquearRespostas(bloquear) {
+      botoes.forEach(botao => {
+        botao.disabled = bloquear;
+      });
+    }
+
     async function iniciarJogo() {
+      carregando = true;
+      respondido = false;
+      bloquearRespostas(true);
+
+      botaoProximo.style.display = "none";
+      botaoReiniciar.style.display = "none";
+
+      document.getElementById("contador").textContent =
+        "Preparando desafios...";
+
+      document.getElementById("resultado").textContent = "";
+      document.getElementById("frase").textContent = "";
+      document.getElementById("imagem").removeAttribute("src");
+
       try {
         const resposta = await fetch("/desafios");
 
         if (!resposta.ok) {
-          throw new Error("Não foi possível carregar os desafios.");
+          throw new Error(
+            "Não foi possível carregar os desafios."
+          );
         }
 
         desafios = await resposta.json();
 
-        if (!Array.isArray(desafios) || desafios.length === 0) {
-          throw new Error("Nenhum desafio foi encontrado.");
+        if (!Array.isArray(desafios) ||
+            desafios.length === 0) {
+          throw new Error(
+            "Nenhum desafio foi encontrado."
+          );
         }
 
         rodada = [...desafios]
@@ -292,6 +345,11 @@
 
         document.getElementById("resultado").textContent =
           erro.message;
+
+        botaoReiniciar.style.display = "block";
+
+      } finally {
+        carregando = false;
       }
     }
 
@@ -307,34 +365,36 @@
         desafio.frase;
 
       document.getElementById("imagem").src =
-    "/static/imagens/" + desafio.imagem.split("/").pop();
+        "/static/imagens/" +
+        desafio.imagem.split("/").pop();
 
-      const resultado = document.getElementById("resultado");
+      const resultado =
+        document.getElementById("resultado");
 
       resultado.textContent = "";
       resultado.className = "";
 
-      botoes.forEach(botao => {
-        botao.disabled = false;
-      });
+      bloquearRespostas(false);
 
-      document.getElementById("proximo").style.display = "none";
-      document.getElementById("reiniciar").style.display = "none";
+      botaoProximo.style.display = "none";
+      botaoReiniciar.style.display = "none";
     }
 
     async function responder(escolha) {
-      if (respondido) return;
+      if (respondido || carregando ||
+          indice >= rodada.length) {
+        return;
+      }
 
       respondido = true;
-
-      botoes.forEach(botao => {
-        botao.disabled = true;
-      });
+      bloquearRespostas(true);
 
       const desafio = rodada[indice];
-      const resultado = document.getElementById("resultado");
+      const resultado =
+        document.getElementById("resultado");
 
-      resultado.textContent = "🤖 A inteligência artificial está analisando...";
+      resultado.textContent =
+        "🤖 A inteligência artificial está analisando...";
 
       try {
         const resposta = await fetch("/responder", {
@@ -349,7 +409,9 @@
         });
 
         if (!resposta.ok) {
-          throw new Error("Erro ao consultar a inteligência artificial.");
+          throw new Error(
+            "Erro ao consultar a inteligência artificial."
+          );
         }
 
         const dados = await resposta.json();
@@ -367,14 +429,12 @@
         }
 
         if (indice < rodada.length - 1) {
-          document.getElementById("proximo").style.display =
-            "block";
+          botaoProximo.style.display = "block";
         } else {
           document.getElementById("contador").textContent =
             "🌟 Missão concluída!";
 
-          document.getElementById("reiniciar").style.display =
-            "block";
+          botaoReiniciar.style.display = "block";
         }
 
       } catch (erro) {
@@ -384,15 +444,15 @@
         resultado.className = "erro";
 
         respondido = false;
-
-        botoes.forEach(botao => {
-          botao.disabled = false;
-        });
+        bloquearRespostas(false);
       }
     }
 
     function proxima() {
-      if (!respondido) return;
+      if (!respondido ||
+          botaoProximo.style.display !== "block") {
+        return;
+      }
 
       indice++;
 
@@ -401,7 +461,51 @@
       }
     }
 
+    // ====================================
+    // CONTROLE EXTERNO COM MAKEY MAKEY
+    // ====================================
+
+    document.addEventListener("keydown", function(event) {
+
+      // Ignora repetição ao manter uma tecla pressionada
+      if (event.repeat) return;
+
+      // SETA ESQUERDA = PRESERVA
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+
+        if (!respondido && !carregando) {
+          responder("PRESERVA");
+        }
+      }
+
+      // SETA DIREITA = PREJUDICA
+      else if (event.key === "ArrowRight") {
+        event.preventDefault();
+
+        if (!respondido && !carregando) {
+          responder("PREJUDICA");
+        }
+      }
+
+      // ESPAÇO = AVANÇAR OU REINICIAR
+      else if (event.code === "Space") {
+        event.preventDefault();
+
+        if (carregando) return;
+
+        if (botaoProximo.style.display === "block") {
+          proxima();
+        }
+        else if (botaoReiniciar.style.display === "block") {
+          iniciarJogo();
+        }
+      }
+    });
+
+    // Inicia o jogo automaticamente
     iniciarJogo();
+
   </script>
 </body>
 </html>
