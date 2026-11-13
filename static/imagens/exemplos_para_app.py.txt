@@ -1,0 +1,23 @@
+# Cole estas entradas DENTRO da lista desafios em app.py, antes do ] final.
+ # Evite duplicar ações já existentes, se desejar desafios realmente diferentes.
+
+    {"imagem": "11_separar_lixo.png", "frase": "Separar lixo.", "correta": "PRESERVA"},
+    {"imagem": "12_economizar_energia.png", "frase": "Economizar energia.", "correta": "PRESERVA"},
+    {"imagem": "13_plantar_cuidar_arvores.png", "frase": "Plantar cuidar arvores.", "correta": "PRESERVA"},
+    {"imagem": "14_garrafa_reutilizavel.png", "frase": "Garrafa reutilizavel.", "correta": "PRESERVA"},
+    {"imagem": "15_uso_consciente_agua.png", "frase": "Uso consciente agua.", "correta": "PRESERVA"},
+    {"imagem": "16_jogar_lixo_chao.png", "frase": "Jogar lixo chao.", "correta": "PREJUDICA"},
+    {"imagem": "17_torneira_aberta.png", "frase": "Torneira aberta.", "correta": "PREJUDICA"},
+    {"imagem": "18_queimar_lixo.png", "frase": "Queimar lixo.", "correta": "PREJUDICA"},
+    {"imagem": "19_destruir_arvores.png", "frase": "Destruir arvores.", "correta": "PREJUDICA"},
+    {"imagem": "20_lavar_carro_mangueira.png", "frase": "Lavar carro mangueira.", "correta": "PREJUDICA"},
+    {"imagem": "21_cultivar_horta.png", "frase": "Cultivar horta.", "correta": "PRESERVA"},
+    {"imagem": "22_usar_lampadas_led.png", "frase": "Usar lampadas led.", "correta": "PRESERVA"},
+    {"imagem": "23_reciclar_materiais.png", "frase": "Reciclar materiais.", "correta": "PRESERVA"},
+    {"imagem": "24_captar_agua_chuva.png", "frase": "Captar agua chuva.", "correta": "PRESERVA"},
+    {"imagem": "25_recuperar_areas_verdes.png", "frase": "Recuperar areas verdes.", "correta": "PRESERVA"},
+    {"imagem": "26_usar_agrotoxicos_excesso.png", "frase": "Usar agrotoxicos excesso.", "correta": "PREJUDICA"},
+    {"imagem": "27_descartar_lixo_bueiro.png", "frase": "Descartar lixo bueiro.", "correta": "PREJUDICA"},
+    {"imagem": "28_poluir_ar.png", "frase": "Poluir ar.", "correta": "PREJUDICA"},
+    {"imagem": "29_ignorar_vazamento.png", "frase": "Ignorar vazamento.", "correta": "PREJUDICA"},
+    {"imagem": "30_aparelhos_ligados.png", "frase": "Aparelhos ligados.", "correta": "PREJUDICA"},

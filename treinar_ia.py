@@ -20,7 +20,7 @@ with open("dados_treinamento.csv", "r", encoding="utf-8-sig", newline="") as arq
 # Criar a inteligência artificial
 modelo = Pipeline([
     ("vetorizador", TfidfVectorizer(ngram_range=(1, 2))),
-    ("classificador", MultinomialNB())
+    ("classificador", MultinomialNB(alpha=0.1))
 ])
 
 # Treinar o modelo
